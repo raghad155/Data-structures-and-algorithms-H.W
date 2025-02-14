@@ -63,4 +63,18 @@ public class DoublyLinkedList<E> {
         size--;
         return nodeToRemove.element;
     }
+    public void concatenate(DoublyLinkedList<E> other) {
+    if (other.isEmpty()) return; // إذا كانت الأخرى فارغة، لا تفعل شيئًا
+
+    // ربط القائمة الأخرى بالتي لدينا
+    trailer.prev.next = other.header.next;
+    other.header.next.prev = trailer.prev;
+    trailer.prev = other.trailer.prev;
+    other.trailer.prev.next = trailer;
+
+    // تحديث الحجم
+    size += other.size();
+    other.header.next = other.trailer; // جعل القائمة الأخرى فارغة
+    other.trailer.prev = other.header;
+}
 }
