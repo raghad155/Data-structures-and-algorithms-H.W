@@ -1,11 +1,7 @@
-class Node<E> {
-    E element;
-    Node<E> prev;
-    Node<E> next;
-
-    public Node(E element) {
-        this.element = element;
-        this.prev = null;
-        this.next = null;
+public interface Stack<E> {
+    boolean isEmpty();
+    int size();  
+    E top(); 
+    void push(E e); 
+    E pop(); 
     }
-}

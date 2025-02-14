@@ -1,0 +1,9 @@
+
+public void transfer(ArrayStack<E> source, ArrayStack<E> target) {
+    ArrayStack<E> temp = new ArrayStack<>(source.size());
+    while (!source.isEmpty()) {
+        temp.push(source.pop()); 
+    }
+    while (!temp.isEmpty()) {
+        target.push(temp.pop()); 
+    }

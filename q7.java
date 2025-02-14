@@ -1,54 +1,49 @@
-public class SingleSentinelDoublyLinkedList<E> {
-    private Node<E> sentinel;
-    private int size = 0;
+import java.util.Stack;
 
-    public SingleSentinelDoublyLinkedList() {
-        sentinel = new Node<>(null);
-        sentinel.next = sentinel;
-        sentinel.prev = sentinel;
+public class PostfixEvaluator {
+    public static int evaluate(String expression) {
+        Stack<Integer> stack = new Stack<>();
+        String[] tokens = expression.split(" ");
+
+        for (String token : tokens) {
+            if (isInteger(token)) {
+                stack.push(Integer.parseInt(token));
+            } else {
+                int b = stack.pop();
+                int a = stack.pop();
+                int result = applyOperation(a, b, token);
+                stack.push(result);
+            }
+        }
+        return stack.pop(); // القيمة النهائية
     }
 
-    public boolean isEmpty() {
-        return size == 0;
+    private static boolean isInteger(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
-    public int size() {
-        return size;
+    private static int applyOperation(int a, int b, String operator) {
+        switch (operator) {
+            case "+":
+                return a + b;
+            case "-":
+                return a - b;
+            case "*":
+                return a * b;
+            case "/":
+                return a / b;
+            default:
+                throw new UnsupportedOperationException("Unknown operator: " + operator);
+        }
     }
 
-    public void addFirst(E element) {
-        Node<E> newNode = new Node<>(element);
-        newNode.next = sentinel.next;
-        newNode.prev = sentinel;
-        sentinel.next.prev = newNode;
-        sentinel.next = newNode;
-        size++;
-    }
-
-    public void addLast(E element) {
-        Node<E> newNode = new Node<>(element);
-        newNode.prev = sentinel.prev;
-        newNode.next = sentinel;
-        sentinel.prev.next = newNode;
-        sentinel.prev = newNode;
-        size++;
-    }
-
-    public E removeFirst() {
-        if (isEmpty()) return null;
-        Node<E> nodeToRemove = sentinel.next;
-        sentinel.next = nodeToRemove.next;
-        nodeToRemove.next.prev = sentinel;
-        size--;
-        return nodeToRemove.element;
-    }
-
-    public E removeLast() {
-        if (isEmpty()) return null;
-        Node<E> nodeToRemove = sentinel.prev;
-        sentinel.prev = nodeToRemove.prev;
-        nodeToRemove.prev.next = sentinel;
-        size--;
-        return nodeToRemove.element;
+    public static void main(String[] args) {
+        String expression = "5 2 + 8 3 - 4 /"; // مثال على التعبير postfix
+        System.out.println("Result: " + evaluate(expression)); // 1
     }
 }

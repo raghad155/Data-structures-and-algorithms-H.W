@@ -1,66 +1,33 @@
-public class DoublyLinkedList<E> {
-    private Node<E> header;
-    private Node<E> trailer;
-    private int size = 0;
+public class ArrayStack<E> implements Stack<E> {
+    private E[] data;
+    private int topIndex = -1;
 
-    public DoublyLinkedList() {
-        header = new Node<>(null);
-        trailer = new Node<>(null);
-        header.next = trailer;
-        trailer.prev = header;
+    public ArrayStack(int capacity) {
+        data = (E[]) new Object[capacity];
     }
 
     public boolean isEmpty() {
-        return size == 0;
+        return topIndex == -1;
     }
 
     public int size() {
-        return size;
+        return topIndex + 1;
     }
 
-    public E first() {
+    public E top() {
         if (isEmpty()) return null;
-        return header.next.element;
+        return data[topIndex];
     }
 
-    public E last() {
+    public void push(E e) {
+        if (size() == data.length) throw new IllegalStateException("Stack is full");
+        data[++topIndex] = e;
+    }
+
+    public E pop() {
         if (isEmpty()) return null;
-        return trailer.prev.element;
-    }
-
-    public void addFirst(E element) {
-        Node<E> newNode = new Node<>(element);
-        newNode.next = header.next;
-        newNode.prev = header;
-        header.next.prev = newNode;
-        header.next = newNode;
-        size++;
-    }
-
-    public void addLast(E element) {
-        Node<E> newNode = new Node<>(element);
-        newNode.prev = trailer.prev;
-        newNode.next = trailer;
-        trailer.prev.next = newNode;
-        trailer.prev = newNode;
-        size++;
-    }
-
-    public E removeFirst() {
-        if (isEmpty()) return null;
-        Node<E> nodeToRemove = header.next;
-        header.next = nodeToRemove.next;
-        nodeToRemove.next.prev = header;
-        size--;
-        return nodeToRemove.element;
-    }
-
-    public E removeLast() {
-        if (isEmpty()) return null;
-        Node<E> nodeToRemove = trailer.prev;
-        trailer.prev = nodeToRemove.prev;
-        nodeToRemove.prev.next = trailer;
-        size--;
-        return nodeToRemove.element;
+        E element = data[topIndex];
+        data[topIndex--] = null; // إزالة العنصر
+        return element;
     }
 }

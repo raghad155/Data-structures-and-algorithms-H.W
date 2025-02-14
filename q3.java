@@ -1,76 +1,46 @@
-public class DoublyLinkedList<E> {
-    private Node<E> header;
-    private Node<E> trailer;
+class Node<E> {
+    E element;
+    Node<E> next;
+
+    public Node(E e) {
+        this.element = e;
+        this.next = null;
+    }
+}
+
+public class LinkedStack<E> implements Stack<E> {
+    private Node<E> top;
     private int size = 0;
 
-    public DoublyLinkedList() {
-        header = new Node<>(null);
-        trailer = new Node<>(null);
-        header.next = trailer;
-        trailer.prev = header;
+    public LinkedStack() {
+        top = null;
     }
 
     public boolean isEmpty() {
-        return size == 0;
+        return top == null;
     }
 
     public int size() {
         return size;
     }
 
-    public E first() {
+    public E top() {
         if (isEmpty()) return null;
-        return header.next.element;
+        return top.element;
     }
 
-    public E last() {
-        if (isEmpty()) return null;
-        return trailer.prev.element;
-    }
-
-    public void addFirst(E element) {
-        Node<E> newNode = new Node<>(element);
-        newNode.next = header.next;
-        newNode.prev = header;
-        header.next.prev = newNode;
-        header.next = newNode;
+    public void push(E e) {
+        Node<E> newNode = new Node<>(e);
+        newNode.next = top;
+        top = newNode;
         size++;
     }
 
-    public void addLast(E element) {
-        Node<E> newNode = new Node<>(element);
-        newNode.prev = trailer.prev;
-        newNode.next = trailer;
-        trailer.prev.next = newNode;
-        trailer.prev = newNode;
-        size++;
-    }
-
-    public E removeFirst() {
+    public E pop() {
         if (isEmpty()) return null;
-        Node<E> nodeToRemove = header.next;
-        header.next = nodeToRemove.next;
-        nodeToRemove.next.prev = header;
+        E element = top.element;
+        top = top.next;
         size--;
-        return nodeToRemove.element;
+        return element;
     }
-
-    public E removeLast() {
-        if (isEmpty()) return null;
-        Node<E> nodeToRemove = trailer.prev;
-        trailer.prev = nodeToRemove.prev;
-        nodeToRemove.prev.next = trailer;
-        size--;
-        return nodeToRemove.element;
-    }
-    public Node<E> findMiddle() {
-    Node<E> slow = header.next; // يبدأ من العنصر الأول
-    Node<E> fast = header.next; // يبدأ من العنصر الأول
-
-    while (fast != trailer && fast.next != trailer) {
-        slow = slow.next; // خطوة واحدة
-        fast = fast.next.next; // خطوتان
-    }
-    return slow; // إرجاع العقدة الوسطى
-}
 }
