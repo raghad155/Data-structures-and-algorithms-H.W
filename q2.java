@@ -1,39 +1,13 @@
-public class ArrayQueue<E> implements Queue<E> {
-    private E[] data;
-    private int front = 0;
-    private int rear = 0;
-    private int size = 0;
-
-    public ArrayQueue(int capacity) {
-        data = (E[]) new Object[capacity];
-    }
-
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
-    public int size() {
-        return size;
-    }
-
-    public E first() {
-        if (isEmpty()) return null;
-        return data[front];
-    }
-
-    public void enqueue(E e) {
-        if (size == data.length) throw new IllegalStateException("Queue is full");
-        data[rear] = e;
-        rear = (rear + 1) % data.length;
-        size++;
-    }
-
-    public E dequeue() {
-        if (isEmpty()) return null;
-        E element = data[front];
-        data[front] = null; // إزالة العنصر
-        front = (front + 1) % data.length;
-        size--;
-        return element;
-    }
+public interface PositionalList<E> {
+    Position<E> first(); 
+    Position<E> last(); 
+    Position<E> before(Position<E> p); 
+    Position<E> after(Position<E> p); 
+    void addFirst(E e); 
+    void addLast(E e); 
+    void addBefore(Position<E> p, E e); 
+    void addAfter(Position<E> p, E e); 
+    E remove(Position<E> p); 
+    int size(); 
+    boolean isEmpty(); 
 }

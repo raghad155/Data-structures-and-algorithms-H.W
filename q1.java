@@ -1,7 +1,3 @@
-public interface Queue<E> {
-    boolean isEmpty();
-    int size(); 
-    E first(); 
-    void enqueue(E e);
-    E dequeue();
+public interface Position<E> {
+    E getElement(); // إرجاع العنصر في الموضع
 }
