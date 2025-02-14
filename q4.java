@@ -1,5 +1,9 @@
-public interface BinaryTree<E> extends Tree<E> {
-    Position<E> left(Position<E> p); 
-    Position<E> right(Position<E> p); 
-    Position<E> sibling(Position<E> p); 
+int sumOfNodes(Node node) {
+    if (node == null) {
+        return 0;
+    }
+    return node.data + sumOfNodes(node.left) + sumOfNodes(node.right);
 }
+
+// استخدام الدالة
+System.out.println("Sum of all nodes: " + sumOfNodes(tree.root)); // 15

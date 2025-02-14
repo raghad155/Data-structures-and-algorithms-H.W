@@ -1,27 +1,17 @@
-import java.util.ArrayList;
-import java.util.List;
-
-public abstract class AbstractTree<E> implements Tree<E> {
-    @Override
-    public boolean isEmpty() {
-        return size() == 0;
+int findMin(Node root) {
+    while (root.left != null) {
+        root = root.left;
     }
-
-    @Override
-    public int numChildren(Position<E> p) {
-        int count = 0;
-        for (Position<E> c : children(p)) {
-            count++;
-        }
-        return count;
-    }
-
-    @Override
-    public Iterable<Position<E>> children(Position<E> p) {
-        List<Position<E>> children = new ArrayList<>();
-        for (Position<E> child : children(p)) {
-            children.add(child);
-        }
-        return children;
-    }
+    return root.data;
 }
+
+int findMax(Node root) {
+    while (root.right != null) {
+        root = root.right;
+    }
+    return root.data;
+}
+
+// استخدام الدوال
+System.out.println("Minimum value: " + findMin(tree.root)); // 4
+System.out.println("Maximum value: " + findMax(tree.root)); // 5
