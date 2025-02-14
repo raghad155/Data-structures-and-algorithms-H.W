@@ -1,25 +1,43 @@
-import java.util.LinkedList;
-import java.util.Queue;
+class ArrayBinaryTree<E> {
+    private E[] tree;
+    private int size;
 
-public class Josephus {
-    public static int josephus(int n, int k) {
-        Queue<Integer> queue = new LinkedList<>();
-        for (int i = 1; i <= n; i++) {
-            queue.add(i);
-        }
-
-        while (queue.size() > 1) {
-            for (int i = 0; i < k - 1; i++) {
-                queue.add(queue.poll()); // نقل العنصر إلى النهاية
-            }
-            queue.poll(); // إزالة العنصر
-        }
-        return queue.poll(); // إرجاع الناجي
+    public ArrayBinaryTree(int capacity) {
+        tree = (E[]) new Object[capacity];
+        size = 0;
     }
 
-    public static void main(String[] args) {
-        int n = 7; // عدد الأشخاص
-        int k = 3; // كل k-th شخص
-        System.out.println("The survivor is: " + josephus(n, k));
+    public void add(E e) {
+        if (size >= tree.length) throw new IllegalStateException("Tree is full");
+        tree[size++] = e;
+    }
+
+    public E get(int index) {
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException("Index out of bounds");
+        return tree[index];
+    }
+
+    public int leftChildIndex(int index) {
+        return 2 * index + 1;
+    }
+
+    public int rightChildIndex(int index) {
+        return 2 * index + 2;
+    }
+
+    public int parentIndex(int index) {
+        return (index - 1) / 2;
+    }
+
+    public int size() {
+        return size;
     }
 }
+
+// استخدام ArrayBinaryTree
+ArrayBinaryTree<Integer> arrayTree = new ArrayBinaryTree<>(10);
+arrayTree.add(1);
+arrayTree.add(2);
+arrayTree.add(3);
+System.out.println("Size: " + arrayTree.size()); // 3
+System.out.println("Element at index 1: " + arrayTree.get(1)); // 2

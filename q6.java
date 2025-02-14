@@ -1,23 +1,16 @@
-class ArrayList<E> {
-    private E[] data;
-    private int size;
+class Node<E> implements Position<E> {
+    E element;
+    Node<E> left, right, parent;
 
-    public ArrayList(int capacity) {
-        data = (E[]) new Object[capacity];
-        size = 0;
+    public Node(E e, Node<E> parent) {
+        this.element = e;
+        this.parent = parent;
+        this.left = null;
+        this.right = null;
     }
 
-    public void add(E e) {
-        if (size == data.length) throw new IllegalStateException("Array is full");
-        data[size++] = e;
-    }
-
-    public E get(int index) {
-        if (index < 0 || index >= size) throw new IndexOutOfBoundsException("Index out of bounds");
-        return data[index];
-    }
-
-    public int size() {
-        return size;
+    @Override
+    public E getElement() {
+        return element;
     }
 }
