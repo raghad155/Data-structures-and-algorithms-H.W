@@ -1,7 +1,7 @@
-public interface Stack<E> {
+public interface Queue<E> {
     boolean isEmpty();
-    int size();  
-    E top(); 
-    void push(E e); 
-    E pop(); 
-    }
+    int size(); 
+    E first(); 
+    void enqueue(E e);
+    E dequeue();
+}

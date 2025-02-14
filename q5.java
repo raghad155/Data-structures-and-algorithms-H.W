@@ -1,9 +1,6 @@
-public int size() {
-    int count = 0;
-    Node<E> current = head;
-    while (current != null) {
-        count++;
-        current = current.next;
+public void rotate() {
+    if (!isEmpty()) {
+        E temp = dequeue(); 
+        enqueue(temp); // إضافة العنصر إلى النهاية
     }
-    return count;
 }

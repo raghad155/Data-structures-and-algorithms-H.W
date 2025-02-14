@@ -1,33 +1,39 @@
-public class ArrayStack<E> implements Stack<E> {
+public class ArrayQueue<E> implements Queue<E> {
     private E[] data;
-    private int topIndex = -1;
+    private int front = 0;
+    private int rear = 0;
+    private int size = 0;
 
-    public ArrayStack(int capacity) {
+    public ArrayQueue(int capacity) {
         data = (E[]) new Object[capacity];
     }
 
     public boolean isEmpty() {
-        return topIndex == -1;
+        return size == 0;
     }
 
     public int size() {
-        return topIndex + 1;
+        return size;
     }
 
-    public E top() {
+    public E first() {
         if (isEmpty()) return null;
-        return data[topIndex];
+        return data[front];
     }
 
-    public void push(E e) {
-        if (size() == data.length) throw new IllegalStateException("Stack is full");
-        data[++topIndex] = e;
+    public void enqueue(E e) {
+        if (size == data.length) throw new IllegalStateException("Queue is full");
+        data[rear] = e;
+        rear = (rear + 1) % data.length;
+        size++;
     }
 
-    public E pop() {
+    public E dequeue() {
         if (isEmpty()) return null;
-        E element = data[topIndex];
-        data[topIndex--] = null; // إزالة العنصر
+        E element = data[front];
+        data[front] = null; // إزالة العنصر
+        front = (front + 1) % data.length;
+        size--;
         return element;
     }
 }

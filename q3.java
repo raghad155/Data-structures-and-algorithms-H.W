@@ -8,39 +8,46 @@ class Node<E> {
     }
 }
 
-public class LinkedStack<E> implements Stack<E> {
-    private Node<E> top;
+public class LinkedQueue<E> implements Queue<E> {
+    private Node<E> front;
+    private Node<E> rear;
     private int size = 0;
 
-    public LinkedStack() {
-        top = null;
+    public LinkedQueue() {
+        front = null;
+        rear = null;
     }
 
     public boolean isEmpty() {
-        return top == null;
+        return size == 0;
     }
 
     public int size() {
         return size;
     }
 
-    public E top() {
+    public E first() {
         if (isEmpty()) return null;
-        return top.element;
+        return front.element;
     }
 
-    public void push(E e) {
+    public void enqueue(E e) {
         Node<E> newNode = new Node<>(e);
-        newNode.next = top;
-        top = newNode;
+        if (isEmpty()) {
+            front = newNode;
+        } else {
+            rear.next = newNode;
+        }
+        rear = newNode;
         size++;
     }
 
-    public E pop() {
+    public E dequeue() {
         if (isEmpty()) return null;
-        E element = top.element;
-        top = top.next;
+        E element = front.element;
+        front = front.next;
         size--;
+        if (isEmpty()) rear = null; // إذا كانت الطابور فارغة
         return element;
     }
 }
