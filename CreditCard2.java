@@ -1,14 +1,14 @@
 
 package lab1;
 
-public class CreditCard {
+public class CreditCard2 {
     private String customer;
     private String bank;
     private String account;
     private int balance;
     private int limit;
 
-    public CreditCard(String cust, String bk, String ac, int b, int lim) {
+    public CreditCard2(String cust, String bk, String ac, int b, int lim) {
         customer = cust;
         bank = bk;
         account = ac;
@@ -28,7 +28,7 @@ public class CreditCard {
         return account;
     }
 
-    public int   getBalance() {
+    public int  getBalance() {
         return balance;
     }
 
@@ -44,10 +44,8 @@ public class CreditCard {
     }
 
     public void makePayment(int payment) {
-        balance -= payment;
-    }
-
-    public void updateLimit(int newLimit) {
-        limit = newLimit;
+        if (payment > 0) {
+            balance -= payment;
+        }
     }
 }
